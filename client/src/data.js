@@ -3,7 +3,7 @@ export const sliderItems = [
 		id: 1,
 		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052322/attire10_cp0dln.jpg",
 		title: "White T-Shirt",
-		desc: "Because white means you're feeling yourself",
+		desc: "Because white is versatile",
 		price: "Ksh 1500",
 		bg: "f5fafd"
 	},
@@ -11,7 +11,7 @@ export const sliderItems = [
 		id: 2,
 		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
 		title: "Black T-Shirt",
-		desc: "Black is Bold, Black is Mystery",
+		desc: "Black is Bold. Black signals Mystery",
 		price: "Ksh 1300",
 		bg: "fcf1ed"
 	},
@@ -19,7 +19,7 @@ export const sliderItems = [
 		id: 3,
 		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire2_mxjcrn.jpg",
 		title: "Sweatshirts",
-		desc: "Show up in style",
+		desc: "Simply so cool!",
 		price: "Ksh 2500",
 		bg: "f5fafd"
 	}

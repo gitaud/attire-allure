@@ -8,6 +8,8 @@ const Container = styled.div`
 	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
+	flex: 1 0 21%;
+	margin: 2%;
 	justify-content: space-between;
 `
 

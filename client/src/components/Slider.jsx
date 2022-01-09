@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
 import { sliderItems } from '../data';
+import { mobile } from "../responsive";
 
 const Container = styled.div`
 	width: 100%;
@@ -10,6 +11,7 @@ const Container = styled.div`
 	display: flex;
 	position: relative; 
 	overflow: hidden;
+	${mobile({ display: "none" })}
 `
 
 const Arrow = styled.div`
@@ -73,10 +75,10 @@ const Desc = styled.p `
 `
 
 const Price = styled.p`
-margin: 0px 0px 10px 0px;
-font-size: 20px;
-font-weight: 500;
-letter-spacing: 3px;
+	margin: 0px 0px 10px 0px;
+	font-size: 20px;
+	font-weight: 500;
+	letter-spacing: 3px;
 `
 
 const Button = styled.button`
