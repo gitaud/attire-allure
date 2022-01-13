@@ -3,14 +3,18 @@
 	"version": "1.0.0",
 	"description": "Attire Allure's backend",
 	"main": "index.js",
-
-	"scripts":{
+	"scripts": {
 		"start": "nodemon index.js"
 	},
-	"keywords": ["nodejs", "attire-allure", "ecommerce"],
+	"keywords": [
+		"nodejs",
+		"attire-allure",
+		"ecommerce"
+	],
 	"author": "Denis Gitau",
 	"license": "ISC",
 	"dependencies": {
+		"crypto-js": "^4.1.1",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.2",
 		"mongoose": "^6.1.5",
