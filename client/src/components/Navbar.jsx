@@ -77,7 +77,7 @@ const Navbar = () => {
 					</SearchContainer>
 				</Left>
 				<Center>
-					<Logo>ATTIRE ALLURE</Logo>
+					<Logo>NdQ Apparel</Logo>
 				</Center>
 				<Right>
 					<MenuItem>REGISTER</MenuItem>

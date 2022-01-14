@@ -84,8 +84,8 @@ const Footer = () => {
 	return (
 		<Container>
 			<Left>
-				<Logo>ATTIRE ALLURE</Logo>
-				<Desc>I often find myself wondering where to store images in React app. Especially when I'm starting a new project. I decided to do a little bit of research to find out what options for storing images are available</Desc>
+				<Logo>NdQ Apparel</Logo>
+				<Desc>NdQ Apparel is the newest way of acquiring your highly unique and designer clothing. Here, you do not just purchase the fabric, you get to own a piece of a totally unique abstract artwork that takes hundreds of man-hours to design. All our designs are done by hand. Hit the shop and grab your next outfit while stocks last</Desc>
 				<SocialContainer>
 					<SocialIcon color="3B5999">
 						<Facebook />
@@ -114,7 +114,7 @@ const Footer = () => {
 
 				<Title>Contact</Title>
 				<ContactItem><Room style={{marginRight: "10px"}}/> Ruaka, Nairobi</ContactItem>
-				<ContactItem><Phone style={{marginRight: "10px"}}/>+254 101 222 333</ContactItem>
+				<ContactItem><Phone style={{marginRight: "10px"}}/>+254 702 851 503</ContactItem>
 				<ContactItem><MailOutline style={{marginRight: "10px"}}/> dev.gits@gmail.com</ContactItem>
 				<Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
 			</Right>
