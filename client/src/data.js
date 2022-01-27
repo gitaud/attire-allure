@@ -29,17 +29,20 @@ export const categories = [
 	{
 		id: 1,
 		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052321/attire9_myisrt.jpg",
-		title: "Kids T-Shirts"
+		title: "Kids T-Shirts",
+		cat: "kids"
 	},
 	{
 		id: 2,
 		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052321/attire8_fq3pne.jpg",
-		title: "Ladies T-Shirts"
+		title: "Ladies T-Shirts",
+		cat: "women"
 	},
 	{
 		id: 3,
 		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052321/attire6_hsqjvh.jpg",
-		title: "Gents T-Shirts"
+		title: "Gents T-Shirts",
+		cat: "gents"
 	}
 ]
 
