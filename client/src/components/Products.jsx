@@ -21,14 +21,16 @@ const Products = ({cat, filter, sort}) => {
 		const getProducts = async () => {
 			try{
 				const res = await axios.get( cat ? `http://localhost:5000/api/products?category=${cat}` : "http://localhost:5000/api/products");
-				setProducts(res.data);
+				console.log(res.data);
+				setProducts(products => [...products, res.data]);
+				// 
 				console.log(products);
 			}catch(err) {
 				console.log(err);
 			}
 		}
 		getProducts();
-	}, [products, cat]);
+	}, [cat]);
 
 	useEffect(() => {
 		cat && setFilteredProducts(
@@ -41,7 +43,7 @@ const Products = ({cat, filter, sort}) => {
 	}, [ products, cat, filter]);
 
 	useEffect(() => {
-		if ((sort === "newest")) {
+		if (sort === "newest") {
 			setFilteredProducts((prev) => {
 				[...prev].sort((a, b) => a.createdAt - b.createdAt);
 			})
@@ -54,7 +56,7 @@ const Products = ({cat, filter, sort}) => {
 				[...prev].sort((a, b) => b.price - a.price)
 			)
 		}
-	}, [sort]);
+	}, [products, sort]);
 
 	return (
 		<Container>
