@@ -42,13 +42,13 @@ const ProductList = () => {
 	const location = useLocation();
 	const cat = location.pathname.split("/")[2];
 
-	const [filter, setFilters] = useState({});
+	const [filters, setFilters] = useState({});
 	const [sort, setSort] = useState("newest");
 
 	const handleFilters = (e) => {
 		const value = e.target.value;
 		setFilters({
-			...filter,
+			...filters,
 			[e.target.name]: value,
 		});
 	}
@@ -58,7 +58,7 @@ const ProductList = () => {
 		<Container>
 			<Announcement />
 			<Navbar />
-			<Title>Hoodies</Title>
+			<Title>{cat}</Title>
 			<FilterContainer>
 				<Filter><FilterText>Filter Products: </FilterText>
 					<Select name="color" onChange={handleFilters}>
@@ -90,7 +90,7 @@ const ProductList = () => {
 					</Select>
 				</Filter>
 			</FilterContainer>
-			<Products cat={cat} filter={filter} sort={sort} />
+			<Products cat={cat} filters={filters} sort={sort} />
 			<Footer />
 		</Container>
 	);

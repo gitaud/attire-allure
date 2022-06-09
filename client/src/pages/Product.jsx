@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
+
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Add, Remove } from '@material-ui/icons';
 import { mobile } from "../responsive";
+import { publicRequest } from '../requestMethods';
 
 const Container = styled.div``;
 
@@ -65,6 +68,7 @@ const FilterTitle = styled.span`
 const FilterColor = styled.div`
 	width: 20px;
 	height: 20px;
+	border: 1px solid black;
 	border-radius: 50%;
 	background-color: ${(props) => props.color};
 	margin: 0px 5px;
@@ -117,41 +121,67 @@ const Button = styled.button`
 
 
 const Product = () => {
+	const location = useLocation();
+	const id = location.pathname.split("/")[2];
+
+	const [product, setProduct] = useState({});
+	const [quantity, setQuantity] = useState(1);
+	const [color, setColor] = useState("");
+	const [size, setSize] = useState("");
+
+	useEffect(() => {
+		const getProduct = async () => {
+			try {
+				const res = await publicRequest.get(`products/find/${id}`)
+				setProduct(res.data);
+			}
+			catch(err) {
+				console.log(err);
+			}
+		};
+		getProduct();
+	}, [id]);
+
+	const handleQuantity = (instr) => {
+		if (instr === "dec") {
+			quantity > 1 && setQuantity(quantity - 1)
+		} else if (instr === "inc") {
+			setQuantity(quantity + 1);
+		}
+	}
 	return (
 		<Container>
 			<Announcement />
 			<Navbar />
 			<Wrapper>
 				<ImgContainer>
-					<Image src="https://res.cloudinary.com/dctw6ghne/image/upload/v1639052322/attire10_cp0dln.jpg" />
+					<Image src={product.img} />
 				</ImgContainer>
 				<InfoContainer>
-					<Title>White T-Shirt</Title>
-					<Desc> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultrices vestibulum diam sed commodo. Phasellus accumsan, sapien ut lacinia bibendum, ex eros tincidunt lorem, non fringilla lorem orci a felis. Maecenas interdum ipsum congue accumsan tincidunt. Maecenas non pulvinar erat. </Desc>
-					<Price>Ksh 1,500</Price>
+					<Title>{product.title}</Title>
+					<Desc> {product.desc}</Desc>
+					<Price>Ksh {product.price}</Price>
 					<FilterContainer>
 						<Filter>
 							<FilterTitle>Color</FilterTitle>
-							<FilterColor color="pink"/>
-							<FilterColor color="black"/>
-							<FilterColor color="gray"/>
+							 { product.color?.map((c) => (
+								<FilterColor color={c} key={c} onClick={() => setColor(c)} />
+								))}
 						</Filter>
 						<Filter>
 							<FilterTitle>Size</FilterTitle>
 							<FilterSize>
-								<FilterSizeOption>XS</FilterSizeOption>
-								<FilterSizeOption>S</FilterSizeOption>
-								<FilterSizeOption>M</FilterSizeOption>
-								<FilterSizeOption>L</FilterSizeOption>
-								<FilterSizeOption>XL</FilterSizeOption>
+								{product.size?.map((s) => (
+									<FilterSizeOption key={s} onChange={(e) => setSize(e.target.value)}>{s}</FilterSizeOption>
+								))}
 							</FilterSize>
 						</Filter>
 					</FilterContainer>
 					<AddContainer>
 						<AmountContainer>
-							<Remove />
-							<Amount>1</Amount>
-							<Add />
+							<Remove onClick={() => handleQuantity("dec")} />
+							<Amount>{quantity}</Amount>
+							<Add onClick={() => handleQuantity("inc")}/>
 						</AmountContainer>
 						<Button>Add to Cart</Button>
 					</AddContainer>

@@ -12,20 +12,21 @@ const Container = styled.div`
 	justify-content: space-between;
 `
 
-const Products = ({cat, filter, sort}) => {
+const Products = ({cat, filters, sort}) => {
 	
 	const [products, setProducts] = useState([]);
 	const [filteredProducts, setFilteredProducts] = useState([]);
 
 	useEffect(() => {
 		const getProducts = async () => {
-			try{
-				const res = await axios.get( cat ? `http://localhost:5000/api/products?category=${cat}` : "http://localhost:5000/api/products");
-				console.log(res.data);
-				setProducts(products => [...products, res.data]);
-				// 
-				console.log(products);
-			}catch(err) {
+			try {
+				const res = await axios.get(
+					 cat 
+					 	? `http://localhost:5000/api/products?category=${cat}` 
+						: "http://localhost:5000/api/products"
+					);
+				setProducts(res.data);
+			} catch(err) {
 				console.log(err);
 			}
 		}
@@ -33,26 +34,27 @@ const Products = ({cat, filter, sort}) => {
 	}, [cat]);
 
 	useEffect(() => {
-		cat && setFilteredProducts(
+		console.log(products);
+		cat ? setFilteredProducts(
 			products.filter(item => 
-				Object.entries(filter).every(([key, value]) => 
+				Object.entries(filters).every(([key, value]) => 
 					item[key].includes(value)
 				)
 			)
-		)
-	}, [ products, cat, filter]);
+		) : setFilteredProducts(products);
+	}, [products, cat, filters]);
 
 	useEffect(() => {
 		if (sort === "newest") {
-			setFilteredProducts((prev) => {
-				[...prev].sort((a, b) => a.createdAt - b.createdAt);
-			})
+			setFilteredProducts((prev) =>
+			 [...prev].sort((a, b) => a.createdAt - b.createdAt)
+			)
 		} else if ((sort === "asc")) {
-			setFilteredProducts((prev) => {
-				[...prev].sort((a, b) => a.price - b.price);
-			})
+			setFilteredProducts((prev) =>
+			 [...prev].sort((a, b) => a.price - b.price)
+			)
 		} else {
-			setFilteredProducts((prev) => 
+			setFilteredProducts((prev) =>
 				[...prev].sort((a, b) => b.price - a.price)
 			)
 		}
@@ -60,8 +62,8 @@ const Products = ({cat, filter, sort}) => {
 
 	return (
 		<Container>
-			{ filteredProducts.map(item => (
-				<Product item={item} key={item.id} />
+			{ filteredProducts.map((product, index) => (
+				<Product item={product} key={index} />
 			))}
 		</Container>
 	)
