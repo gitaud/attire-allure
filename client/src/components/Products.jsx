@@ -34,7 +34,6 @@ const Products = ({cat, filters, sort}) => {
 	}, [cat]);
 
 	useEffect(() => {
-		console.log(products);
 		cat ? setFilteredProducts(
 			products.filter(item => 
 				Object.entries(filters).every(([key, value]) => 

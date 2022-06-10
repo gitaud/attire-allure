@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { mobile } from "../responsive";
+import { publicRequest } from '../requestMethods';
+import { addProduct } from '../redux/cartRedux';
+
 
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Add, Remove } from '@material-ui/icons';
-import { mobile } from "../responsive";
-import { publicRequest } from '../requestMethods';
 
 const Container = styled.div``;
 
@@ -128,12 +132,16 @@ const Product = () => {
 	const [quantity, setQuantity] = useState(1);
 	const [color, setColor] = useState("");
 	const [size, setSize] = useState("");
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const getProduct = async () => {
 			try {
 				const res = await publicRequest.get(`products/find/${id}`)
 				setProduct(res.data);
+				console.log(res.data);
+				setColor(res.data.color[0]);
+				setSize(res.data.size[0]);
 			}
 			catch(err) {
 				console.log(err);
@@ -149,6 +157,11 @@ const Product = () => {
 			setQuantity(quantity + 1);
 		}
 	}
+
+	const handleClick = () => {
+		dispatch(addProduct({...product, quantity, color, size}))
+	}
+
 	return (
 		<Container>
 			<Announcement />
@@ -170,9 +183,9 @@ const Product = () => {
 						</Filter>
 						<Filter>
 							<FilterTitle>Size</FilterTitle>
-							<FilterSize>
-								{product.size?.map((s) => (
-									<FilterSizeOption key={s} onChange={(e) => setSize(e.target.value)}>{s}</FilterSizeOption>
+							<FilterSize onChange={(e) => setSize(e.target.value)}>
+								{product.size?.map((s) => (  
+									<FilterSizeOption key={s}>{s}</FilterSizeOption>
 								))}
 							</FilterSize>
 						</Filter>
@@ -183,7 +196,7 @@ const Product = () => {
 							<Amount>{quantity}</Amount>
 							<Add onClick={() => handleQuantity("inc")}/>
 						</AmountContainer>
-						<Button>Add to Cart</Button>
+						<Button onClick={handleClick}>Add to Cart</Button>
 					</AddContainer>
 				</InfoContainer>
 			</Wrapper>

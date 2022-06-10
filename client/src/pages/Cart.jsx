@@ -1,10 +1,18 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { Add, Remove } from '@material-ui/icons';
+import StripeCheckout from 'react-stripe-checkout';
+import { useNavigate } from 'react-router';
+
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Add, Remove } from '@material-ui/icons';
+
 import { mobile } from "../responsive";
+import { userRequest } from '../requestMethods';
+
+const KEY = 'pk_test_51KIDpdJ6URmMXN5WwXGOCZWfppTNqtT2VZFAjjzuFe1nZBQJ80CQ7EIYzWBote2VTVGHcnpdcvprw7Yi3XohRdjh00jHM5nDTF';;
 
 const Container = styled.div``;
 
@@ -93,6 +101,7 @@ const ProductColor = styled.div`
 	height: 20px;
 	border-radius: 50%;
 	background-color: ${(props) => props.color};
+	border: 1px solid black;
 `;
 
 const ProductSize = styled.span``;
@@ -127,7 +136,7 @@ const Summary = styled.div`
 	border: 0.5px solid lightgray;
 	border-radius: 10px;
 	padding: 20px;
-	height: 50vh;
+	height: 250px;
 `;
 
 const SummaryTitle = styled.h1`
@@ -155,6 +164,31 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+	const cart = useSelector(state=> state.cart)
+	const [stripeToken, setStripeToken] = useState(null);
+	const navigate = useNavigate();
+
+	const onToken = (token) => {
+		setStripeToken(token);
+	}
+
+	useEffect(() => {
+		const makeRequest = async () => {
+			try {
+				const res = await userRequest.post("/checkout/payment", {
+					tokenId: stripeToken.id,
+					amount: (cart.total + 150),
+				});
+				console.log(res.data)
+				navigate("/success", {data: res.data})
+			}
+			catch(err) {
+				console.log(err);
+			}
+		};
+		stripeToken && makeRequest();
+	}, [stripeToken, cart.total, navigate])
+
 	return(
 		<Container>
 			<Announcement />
@@ -171,69 +205,59 @@ const Cart = () => {
 				</Top>
 				<Bottom>
 					<Info>
-						<Product>
-							<ProductDetails>
-								<Image src="https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg" />
-								<Details>
-									<ProductName><b>Product:</b> Black T-Shirt</ProductName>
-									<ProductId><b>ID: </b> 93273413432</ProductId>
-									<ProductColor color="black" />
-									<ProductSize><b>Size:</b> L</ProductSize>
-								</Details>
-							</ProductDetails>
-							<PriceDetails>
-								<ProductAmountContainer>
-									<Add />
-									<ProductAmount>3</ProductAmount>
-									<Remove />
-								</ProductAmountContainer>
-								<ProductPrice>Ksh 4,500</ProductPrice>
-							</PriceDetails>
+						{cart.products.map(product => (
+							<>
+							<Product key={product._id}>
+								<ProductDetails>
+									<Image src={product.img} />
+									<Details>
+										<ProductName><b>Product:</b> {product.title}</ProductName>
+										<ProductId><b>ID: </b> {product._id}</ProductId>
+										<span style={{display: "flex", flexDirection: "row", alignItems: "center"}}><b style={{marginRight: "5px"}}>Color:</b> <ProductColor color={product.color}/> </span>
+										<ProductSize><b>Size:</b> {product.size}</ProductSize>
+									</Details>
+								</ProductDetails>
+								<PriceDetails>
+									<ProductAmountContainer>
+										<Add />
+										<ProductAmount>{product.quantity}</ProductAmount>
+										<Remove />
+									</ProductAmountContainer>
+									<ProductPrice>Ksh {product.price * product.quantity}</ProductPrice>
+								</PriceDetails>
 						</Product>
-						<Hr />
-						<Product>
-							<ProductDetails>
-								<Image src="https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire2_mxjcrn.jpg" />
-								<Details>
-									<ProductName><b>Product:</b> SweatShirt</ProductName>
-									<ProductId><b>ID: </b> 85423479058</ProductId>
-									<ProductColor color="pink" />
-									<ProductSize><b>Size:</b> M</ProductSize>
-								</Details>
-							</ProductDetails>
-							<PriceDetails>
-								<ProductAmountContainer>
-									<Add />
-									<ProductAmount>2</ProductAmount>
-									<Remove />
-								</ProductAmountContainer>
-								<ProductPrice>Ksh 5,000</ProductPrice>
-							</PriceDetails>
-						</Product>
+						<Hr key={product._id + '1'}/>
+						</>
+						))}
+						
 					</Info>
+
 					<Summary>
 						<SummaryTitle>Order Summary</SummaryTitle>
 						<SummaryItem>
 							<SummaryItemText>Subtotal</SummaryItemText>
-							<SummaryItemPrice>Ksh 9,500</SummaryItemPrice>
-						</SummaryItem>
-						<SummaryItem>
-							<SummaryItemText>VAT</SummaryItemText>
-							<SummaryItemPrice>Ksh 1,520</SummaryItemPrice>
+							<SummaryItemPrice>Ksh {cart.total}</SummaryItemPrice>
 						</SummaryItem>
 						<SummaryItem>
 							<SummaryItemText>Delivery Charges</SummaryItemText>
-							<SummaryItemPrice>Ksh 500</SummaryItemPrice>
-						</SummaryItem>
-						<SummaryItem>
-							<SummaryItemText>Early Birds Discount</SummaryItemText>
-							<SummaryItemPrice>Ksh -1,000</SummaryItemPrice>
+							<SummaryItemPrice>Ksh 150</SummaryItemPrice>
 						</SummaryItem>
 						<SummaryItem>
 							<SummaryItemText type="total">Total</SummaryItemText>
-							<SummaryItemPrice>Ksh 10,520</SummaryItemPrice>
+							<SummaryItemPrice>Ksh {cart.total + 150}</SummaryItemPrice>
 						</SummaryItem>
-						<Button>CHECKOUT NOW</Button>
+						<StripeCheckout
+							name="Ndq Apparel" 
+							image=""
+							billingAddress
+							shippingAddress
+							description = {`Your total is Ksh ${cart.total + 150}`}
+							amount={cart.total + 150}
+							token={onToken}
+							stripeKey = {KEY}
+						>
+							<Button>CHECKOUT NOW</Button>
+						</StripeCheckout>
 					</Summary>
 				</Bottom>
 			</Wrapper>
