@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 // import { useNavigate } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -12,12 +13,12 @@ import Cart from "./pages/Cart";
 import ErrorPage from "./pages/ErrorPage";
 
 // Components
-import Success from "./components/Success";
+import Success from "./pages/Success";
 import Pay from "./components/Pay"
 
 
 const App = () => {
-	const user = false;
+	const user = useSelector((state) => state.user.currentUser);
 	return (
 		<Router>
 			<Routes>
