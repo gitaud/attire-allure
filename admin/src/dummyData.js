@@ -52,3 +52,54 @@ export const userData = [
 		"Active Users": 3490,
 	},
 ];
+export const userRows = [
+	{ id: 1, 
+		username: "Jon Snow", 
+		email: "snowbunny@gmail.com", 
+		avatar: "https://avatars.githubusercontent.com/u/32839689?v=4",
+		status: "active",
+		transactions: 25000
+	},
+	{ id: 2, 
+		username: "Jon Snow", 
+		email: "snowbunny@gmail.com", 
+		avatar: "https://avatars.githubusercontent.com/u/32839689?v=4",
+		status: "active",
+		transactions: 35000
+	},
+	{ id: 3, 
+		username: "Jon Snow", 
+		email: "snowbunny@gmail.com", 
+		avatar: "https://avatars.githubusercontent.com/u/32839689?v=4",
+		status: "active",
+		transactions: 15000
+	},
+	{ id: 4, 
+		username: "Jon Snow", 
+		email: "snowbunny@gmail.com", 
+		avatar: "https://avatars.githubusercontent.com/u/32839689?v=4",
+		status: "active",
+		transactions: 10000
+	},
+	{ id: 5, 
+		username: "Jon Snow", 
+		email: "snowbunny@gmail.com", 
+		avatar: "https://avatars.githubusercontent.com/u/32839689?v=4",
+		status: "active",
+		transactions: 5000
+	},
+	{ id: 6, 
+		username: "Jon Snow", 
+		email: "snowbunny@gmail.com", 
+		avatar: "https://avatars.githubusercontent.com/u/32839689?v=4",
+		status: "active",
+		transactions: 40000
+	},
+	{ id: 7, 
+		username: "Jon Snow", 
+		email: "snowbunny@gmail.com", 
+		avatar: "https://avatars.githubusercontent.com/u/32839689?v=4",
+		status: "active",
+		transactions: 10000
+	},
+];
