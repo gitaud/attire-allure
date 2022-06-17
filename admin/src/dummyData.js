@@ -103,3 +103,74 @@ export const userRows = [
 		transactions: 10000
 	},
 ];
+
+export const productRows = [
+	{ id: 1, 
+		name: "Black T-Shirt",  
+		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
+		stock: 325,
+		status: "active",
+		price: 25000
+	},
+	{ id: 2, 
+		name: "Black T-Shirt",  
+		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
+		stock: 325,
+		status: "active",
+		price: 35000
+	},
+	{ id: 3, 
+		name: "Black T-Shirt",  
+		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
+		stock: 325,
+		status: "active",
+		price: 15000
+	},
+	{ id: 4, 
+		name: "Black T-Shirt",  
+		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
+		stock: 325,
+		status: "active",
+		price: 10000
+	},
+	{ id: 5, 
+		name: "Black T-Shirt",  
+		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
+		stock: 325,
+		status: "active",
+		price: 5000
+	},
+	{ id: 6, 
+		name: "Black T-Shirt",  
+		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
+		stock: 325,
+		status: "active",
+		price: 40000
+	},
+	{ id: 7, 
+		name: "Black T-Shirt",  
+		img: "https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg",
+		stock: 325,
+		status: "active",
+		price: 10000
+	},
+];
+
+export const productData = [
+	{
+		name: "Dec",
+		"Sales": 25500,
+	},
+	{
+		name: 'Jan',
+		"Sales": 40000,
+	},
+	{
+		name: 'Feb',
+		"Sales": 30000,
+	},
+	{
+		name: 'Mar',
+		"Sales": 20000,
+	}
+]
