@@ -26,11 +26,13 @@ const HomePage = () => {
 }
 
 const App = () => {
+
+	const admin = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.isAdmin;
 	return(
 		<Router>
 			<Routes>
 				<Route path="/login" element={<Login />} />
-				<Route path="/" element={<HomePage />}>
+				{ admin && <Route path="/" element={<HomePage />}>
 					<Route path="/" element={<Home />} />
 					<Route path="/users" element={<UserList />} />
 					<Route path="/user/:userId" element={<User />} />
@@ -38,7 +40,7 @@ const App = () => {
 					<Route path="/products" element={<ProductList />} />
 					<Route path="/product/:productId" element={<Product />} />
 					<Route path="/products/new" element={<NewProduct/> } />
-				</Route>
+				</Route>}
 			</Routes>
 				
 				

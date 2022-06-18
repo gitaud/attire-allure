@@ -23,7 +23,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "^3.4.4",
     "recharts": "^2.1.10",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "timeago.js": "^4.0.2"
   },
   "browserslist": {
     "production": [

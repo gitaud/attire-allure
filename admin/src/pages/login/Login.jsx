@@ -21,12 +21,11 @@ export default function Login() {
 				alignItems:"center",
 				justifyContent: "center",
 				height: "100vh",
-				
 			}
 		}>
 			<input style={{padding: 10, marginBottom: 20}} type="text" placeholder="admin@gmail.com" onChange={(e) => setEmail(e.target.value)} />
 			<input style={{padding: 10, marginBottom: 20}} type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)}/>
-			<button style={{ padding: 10, width: 100}}>Login</button>
+			<button style={{ padding: 10, width: 100}} onClick={handleClick}>Login</button>
 		</div>
 	)
 }

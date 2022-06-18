@@ -16,6 +16,7 @@
 	height: 40px;
 	border-radius: 50%;
 	object-fit: cover;
+	flex: 0.7;
 }
 
 .widgetSmList {
@@ -32,9 +33,15 @@
 }
 
 .widgetSmUser {
+	flex: 3.5;
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
+	text-align: left;
+	margin-left: 5px;
 }
+
+
 
 .widgetSmUsername {
 	font-weight: 600;
@@ -45,6 +52,7 @@
 }
 
 .widgetSmButton {
+	flex: 1.5;
 	display: flex;
 	align-items: center;
 	border: none;
