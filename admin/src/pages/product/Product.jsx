@@ -1,11 +1,59 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Chart from "../../components/chart/Chart";
-import { productData } from "../../dummyData";
 import { Publish } from '@material-ui/icons';
 import "./Product.css";
+import { userRequest } from "../../requestMethods";
 
 export default function Product() {
+
+	const location = useLocation();
+	const productId = location.pathname.split("/")[2];
+	const [ productStats, setProductStats ] = useState([])
+
+	const MONTHS = useMemo(
+		() => [
+			"Jan",
+			"Feb",
+			"Mar",
+			"Apr",
+			"May",
+			"June",
+			"July",
+			"Aug",
+			"Sept",
+			"Oct",
+			"Nov",
+			"Dec"
+		], []
+	)
+
+	useEffect(() => {
+		const getStats = async () => {
+			try {
+				const res = await userRequest.get("/orders/income?pid=" + productId);
+				const list = res.data.sort((a, b) => {
+					return a._id - b._id;
+				})
+				list.map((item) => 
+					setProductStats((prev) => [
+						...prev,
+						{ name: MONTHS[item._id - 1], Sales: item.total },
+					])
+				)
+				console.log(list);
+			} catch(err) {
+				console.log(err);
+			}
+		}
+		getStats();
+	}, [productId, MONTHS]);
+
+	const product = useSelector( (state) => 
+		state.product.products.find((product) => product._id === productId)	
+	);
+
 	return (
 		<div className="product">
 			<div className="productTitleContainer">
@@ -16,29 +64,25 @@ export default function Product() {
 			</div>
 			<div className="productTop">
 				<div className="productTopLeft">
-					<Chart data={productData} dataKey="Sales" title="Sales Performance" /> 
+					<Chart data={productStats} dataKey="Sales" title="Sales Performance" /> 
 				</div>
 				<div className="productTopRight">
 					<div className="productInfoTop">
-						<img src="https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg" alt="black t-shirt" className="productInfoImg" />
-						<span className="productName">Black T-Shirt</span>
+						<img src={product.img} alt={product.title} className="productInfoImg" />
+						<span className="productName">{product.title}</span>
 					</div>
 					<div className="productInfoBottom">
 						<div className="productInfoItem">
 							<span className="productInfoKey">id</span>
-							<span className="productInfoValue">123</span>
+							<span className="productInfoValue" style={{marginLeft: "15px"}}>{product._id}</span>
 						</div>
 						<div className="productInfoItem">
-							<span className="productInfoKey">sales</span>
-							<span className="productInfoValue">115500</span>
-						</div>
-						<div className="productInfoItem">
-							<span className="productInfoKey">active</span>
-							<span className="productInfoValue">yes</span>
+							<span className="productInfoKey">Sales {productStats ? productStats[productStats.length - 1]?.name : '' }</span>
+							<span className="productInfoValue">{productStats ? productStats[productStats.length - 1]?.Sales : 0 }</span>
 						</div>
 						<div className="productInfoItem">
 							<span className="productInfoKey">in stock: </span>
-							<span className="productInfoValue">13</span>
+							<span className="productInfoValue">{product.inStock ? "Yes" : "No"}</span>
 						</div>
 					</div>
 				</div>
@@ -47,21 +91,20 @@ export default function Product() {
 				<form className="productForm">
 					<div className="productFormLeft">
 						<label>Product Name</label>
-						<input type="text" placeholder="Black T-Shirt"/>
+						<input type="text" placeholder={product.title}/>
+						<label>Product Description</label>
+						<input type="text" placeholder={product.desc}/>
+						<label>Product Price</label>
+						<input type="text" placeholder={product.price}/>
 						<label>In Stock</label>
 						<select name="inStock" id="inStock">
-							<option value="yes">Yes</option>
-							<option value="no">No</option>
-						</select>
-						<label>Active</label>
-						<select name="active" id="active">
-							<option value="yes">Yes</option>
-							<option value="no">No</option>
+							<option value="true">Yes</option>
+							<option value="false">No</option>
 						</select>
 					</div>
 					<div className="productFormRight">
 						<div className="productUpload">
-							<img src="https://res.cloudinary.com/dctw6ghne/image/upload/v1639052320/attire3_tkomst.jpg" alt="" className="productUploadImg" />
+							<img src={product.img} alt="" className="productUploadImg" />
 							<label htmlFor="file">
 								<Publish />
 							</label>

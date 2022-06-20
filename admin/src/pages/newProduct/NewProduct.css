@@ -26,6 +26,16 @@
 	padding: 10px;
 }
 
+.size {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.size > label {
+	margin-left: 15px;
+}
+
 .addProductItem > select {
 	padding: 10px;
 }
